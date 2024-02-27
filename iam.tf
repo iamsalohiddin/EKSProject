@@ -28,7 +28,7 @@ resource "aws_iam_role_policy_attachment" "example-AmazonEKSVPCResourceControlle
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
   role       = aws_iam_role.example.name
 }
-resource "aws_iam_role" "example" {
+resource "aws_iam_role" "node-example" {
   name = "eks-node-group-example"
 
   assume_role_policy = jsonencode({
