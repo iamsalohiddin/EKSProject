@@ -3,7 +3,7 @@ resource "aws_launch_template" "ProjectLT" {
   key_name = "EKSCluster"
   image_id = var.ami_image
   instance_type = var.instance_type
-  security_group_names = aws_security_group.EKS.name
+  security_group_names = [aws_security_group.EKS.name]
   block_device_mappings {
     device_name = "/dev/xvdb"
     ebs {
