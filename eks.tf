@@ -24,7 +24,6 @@ resource "aws_eks_cluster" "ProjectEKS" {
 
 resource "aws_eks_node_group" "EKS_Node_Group" {
   cluster_name = aws_eks_cluster.ProjectEKS.name
-  node_group_name = "EKSGroup"
   node_role_arn = aws_iam_role.node-example.arn
   subnet_ids = aws_subnet.private[*].id
   scaling_config {
