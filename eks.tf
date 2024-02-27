@@ -44,3 +44,6 @@ resource "aws_eks_node_group" "EKS_Node_Group" {
     aws_iam_role_policy_attachment.example-AmazonEC2ContainerRegistryReadOnly 
     ]
 }
+output "subnet_ids" {
+  value = aws_subnet.private[*].id
+}
