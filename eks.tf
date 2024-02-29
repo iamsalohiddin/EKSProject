@@ -22,7 +22,7 @@ resource "aws_eks_cluster" "ProjectEKS" {
     aws_iam_role_policy_attachment.example-AmazonEKSVPCResourceController ]
 }
 
-resource "aws_eks_node_group" "EKS_Node_Group" {
+resource "aws_eks_node_group" "eksnodegroup" {
   cluster_name = aws_eks_cluster.ProjectEKS.name
   node_role_arn = aws_iam_role.node-example.arn
   subnet_ids = aws_subnet.private[*].id
