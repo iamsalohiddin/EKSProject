@@ -12,15 +12,15 @@ resource "aws_launch_template" "ProjectLT" {
     }
   }
 }
-# resource "aws_eks_cluster" "ProjectEKS" {
-#   name = "ProjectEKS"
-#   role_arn = aws_iam_role.example.arn
-#   vpc_config {
-#     subnet_ids = aws_subnet.private[*].id
-#   }
-#   depends_on = [ aws_iam_role_policy_attachment.example-AmazonEKSClusterPolicy,
-#     aws_iam_role_policy_attachment.example-AmazonEKSVPCResourceController ]
-# }
+resource "aws_eks_cluster" "ProjectEKS" {
+  name = "ProjectEKS"
+  role_arn = aws_iam_role.example.arn
+  vpc_config {
+    subnet_ids = aws_subnet.private[*].id
+  }
+  depends_on = [ aws_iam_role_policy_attachment.example-AmazonEKSClusterPolicy,
+    aws_iam_role_policy_attachment.example-AmazonEKSVPCResourceController ]
+}
 
 # resource "aws_eks_node_group" "eksnodegroup" {
 #   cluster_name = aws_eks_cluster.ProjectEKS.name
