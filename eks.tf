@@ -12,26 +12,51 @@ resource "aws_launch_template" "ProjectLT" {
     }
   }
 }
-resource "aws_eks_cluster" "ProjectEKS" {
-  name = "ProjectEKS"
-  role_arn = aws_iam_role.example.arn
-  vpc_config {
-    subnet_ids = aws_subnet.private[*].id
-  }
-  depends_on = [ aws_iam_role_policy_attachment.example-AmazonEKSClusterPolicy,
-    aws_iam_role_policy_attachment.example-AmazonEKSVPCResourceController ]
-}
+# resource "aws_eks_cluster" "ProjectEKS" {
+#   name = "ProjectEKS"
+#   role_arn = aws_iam_role.example.arn
+#   vpc_config {
+#     subnet_ids = aws_subnet.private[*].id
+#   }
+#   depends_on = [ aws_iam_role_policy_attachment.example-AmazonEKSClusterPolicy,
+#     aws_iam_role_policy_attachment.example-AmazonEKSVPCResourceController ]
+# }
 
-resource "aws_eks_node_group" "eksnodegroup" {
+# resource "aws_eks_node_group" "eksnodegroup" {
+#   cluster_name = aws_eks_cluster.ProjectEKS.name
+#   node_role_arn = aws_iam_role.node-example.arn
+
+#   subnet_ids = aws_subnet.private[*].id
+
+#   scaling_config {
+#     desired_size = 1
+#     min_size     = 0
+#     max_size     = 10
+#   }
+
+#   launch_template {
+#     name    = aws_launch_template.ProjectLT.name
+#     version = aws_launch_template.ProjectLT.latest_version
+#   }
+
+#   depends_on = [ 
+#     aws_iam_role_policy_attachment.example-AmazonEKSWorkerNodePolicy,
+#     aws_iam_role_policy_attachment.example-AmazonEKS_CNI_Policy,
+#     aws_iam_role_policy_attachment.example-AmazonEC2ContainerRegistryReadOnly 
+#   ]
+# }
+resource "aws_eks_node_group" "eks_node_group" {
   cluster_name = aws_eks_cluster.ProjectEKS.name
+  node_group_name = "example-node-group"
+
   node_role_arn = aws_iam_role.node-example.arn
 
   subnet_ids = aws_subnet.private[*].id
 
   scaling_config {
     desired_size = 1
-    min_size     = 0
     max_size     = 10
+    min_size     = 0
   }
 
   launch_template {
@@ -39,10 +64,10 @@ resource "aws_eks_node_group" "eksnodegroup" {
     version = aws_launch_template.ProjectLT.latest_version
   }
 
-  depends_on = [ 
+  depends_on = [
     aws_iam_role_policy_attachment.example-AmazonEKSWorkerNodePolicy,
     aws_iam_role_policy_attachment.example-AmazonEKS_CNI_Policy,
-    aws_iam_role_policy_attachment.example-AmazonEC2ContainerRegistryReadOnly 
+    aws_iam_role_policy_attachment.example-AmazonEC2ContainerRegistryReadOnly,
   ]
 }
 
