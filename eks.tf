@@ -25,25 +25,27 @@ resource "aws_eks_cluster" "ProjectEKS" {
 resource "aws_eks_node_group" "eksnodegroup" {
   cluster_name = aws_eks_cluster.ProjectEKS.name
   node_role_arn = aws_iam_role.node-example.arn
-  subnet_ids = [element(aws_subnet.private[*].id, 0)]
+
+  subnet_ids = aws_subnet.private[*].id
+
   scaling_config {
     desired_size = 1
-    min_size = 0
-    max_size = 10
+    min_size     = 0
+    max_size     = 10
   }
-  update_config {
-    max_unavailable = 1
-  }
+
   launch_template {
-    name = aws_launch_template.ProjectLT.name
+    name    = aws_launch_template.ProjectLT.name
     version = aws_launch_template.ProjectLT.latest_version
   }
+
   depends_on = [ 
     aws_iam_role_policy_attachment.example-AmazonEKSWorkerNodePolicy,
     aws_iam_role_policy_attachment.example-AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.example-AmazonEC2ContainerRegistryReadOnly 
-    ]
+  ]
 }
+
 output "subnet_ids" {
   value = aws_subnet.private[*].id
 }
