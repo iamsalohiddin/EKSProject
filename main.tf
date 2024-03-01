@@ -26,7 +26,7 @@ output "cluster_name" {
 variable "region" {
   description = "AWS region"
   type        = string
-  default     = "us-east-1"
+  default     = "us-east-2"
 }
 # Copyright (c) HashiCorp, Inc.
 # SPDX-License-Identifier: MPL-2.0
